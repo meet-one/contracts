@@ -48,25 +48,24 @@ void token::issue( account_name to, asset quantity, string memo )
     eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
 
     // The EOS mainnet went live on 2018-06-15 01:41:15 (UTC+8)
-    uint32_t seconds = now() - 1528998075;
-
-    int days = seconds / 3600 / 24;
+    uint32_t seconds_per_year = 3600 * 24 * 365;
+    uint32_t seconds_since_activated = now() - 1528998075;
 
     int64_t max_supply_amount = st.max_supply.amount;
-    auto available_amount = static_cast<int64_t>(max_supply_amount * 0.75);
+    auto frozen_amount = (int64_t)(max_supply_amount * 0.25);
 
     // Frozen 25% token for four years, release 25% per year.
-    if (days >= 365 * 4) {
-        available_amount = max_supply_amount;
-    } else if (days >= 365 * 3) {
-        available_amount = static_cast<int64_t>(available_amount + max_supply_amount * 0.25 * 0.75);
-    } else if (days >= 365 * 2) {
-        available_amount = static_cast<int64_t>(available_amount + max_supply_amount * 0.25 * 0.5);
-    } else if (days >= 365) {
-        available_amount = static_cast<int64_t>(available_amount + max_supply_amount * 0.25 * 0.25);
+    if (seconds_since_activated >= seconds_per_year * 4) {
+        frozen_amount = 0;
+    } else if (seconds_since_activated >= seconds_per_year * 3) {
+        frozen_amount = (int64_t)max_supply_amount * 0.25 * 0.25;
+    } else if (seconds_since_activated >= seconds_per_year * 2) {
+        frozen_amount = (int64_t)max_supply_amount * 0.25 * 0.5;
+    } else if (seconds_since_activated >= seconds_per_year) {
+        frozen_amount = (int64_t)max_supply_amount * 0.25 * 0.75;
     }
 
-    eosio_assert( quantity.amount <= available_amount - st.supply.amount, "quantity exceeds available supply");
+    eosio_assert( quantity.amount <= available_amount - st.supply.amount - frozen_amount, "quantity exceeds available supply");
 
     statstable.modify( st, 0, [&]( auto& s ) {
        s.supply += quantity;
