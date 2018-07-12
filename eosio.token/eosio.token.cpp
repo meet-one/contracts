@@ -55,10 +55,11 @@ void token::issue( account_name to, asset quantity, string memo )
     int64_t max_supply_amount = st.max_supply.amount;
     auto available_amount = static_cast<int64_t>(max_supply_amount * 0.75);
 
+    // Frozen 25% token for four years, release 25% per year.
     if (days >= 365 * 4) {
         available_amount = max_supply_amount;
     } else if (days >= 365 * 3) {
-        available_amount = static_cast<int64_t>(available_amount + (int64_t) max_supply_amount * 0.25 * 0.75);
+        available_amount = static_cast<int64_t>(available_amount + max_supply_amount * 0.25 * 0.75);
     } else if (days >= 365 * 2) {
         available_amount = static_cast<int64_t>(available_amount + max_supply_amount * 0.25 * 0.5);
     } else if (days >= 365) {
