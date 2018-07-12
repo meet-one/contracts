@@ -28,40 +28,6 @@ void token::create( account_name issuer,
     });
 }
 
-int64_t get_available_amount( int64_t max_supply )
-{
-        // eos mainnet activated 2018-06-15 01:41:15
-    struct tm start_time;
-    start_time.tm_hour = 1;
-    start_time.tm_min = 41;
-    start_time.tm_sec = 15;
-    start_time.tm_year = 118;
-    start_time.tm_mon = 5;
-    start_time.tm_mday = 15;
-
-    time_t current_time;
-    current_time = time( 0 );
-
-    int days;
-    days = difftime( current_time, timegm(&start_time) ) / 3600 / 24;
-
-    eosio::print("%d days since June 15, 2018 \n", days);
-
-    auto available_rate = 0.75;
-    if( days >= 365 * 4 ){
-        available_rate = 1.0;
-    }else if( days >= 365 * 3 ){
-        available_rate = available_rate + 0.25 * 0.75;
-    }else if( days >= 365 * 2 ){
-        available_rate = available_rate + 0.25 * 0.5;
-    }else if( days >= 365 ){
-        available_rate = available_rate + 0.25 * 0.25;
-    }
-
-    int64_t available_amount = max_supply * available_rate;
-    printf("%lld  \n",available_amount);
-    return available_amount;
-}
 
 void token::issue( account_name to, asset quantity, string memo )
 {
@@ -80,9 +46,7 @@ void token::issue( account_name to, asset quantity, string memo )
     eosio_assert( quantity.amount > 0, "must issue positive quantity" );
 
     eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
-
-    int64_t available_amount = get_available_amount(st.max_supply.amount);
-    eosio_assert( quantity.amount <= available_amount - st.supply.amount, "quantity exceeds available supply");
+    eosio_assert( quantity.amount <= st.max_supply.amount - st.supply.amount, "quantity exceeds available supply");
 
     statstable.modify( st, 0, [&]( auto& s ) {
        s.supply += quantity;
