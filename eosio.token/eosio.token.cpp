@@ -65,7 +65,7 @@ void token::issue( account_name to, asset quantity, string memo )
         frozen_amount = (int64_t)max_supply_amount * 0.25 * 0.75;
     }
 
-    eosio_assert( quantity.amount <= available_amount - st.supply.amount - frozen_amount, "quantity exceeds available supply");
+    eosio_assert( quantity.amount <= max_supply_amount - st.supply.amount - frozen_amount, "quantity exceeds available supply");
 
     statstable.modify( st, 0, [&]( auto& s ) {
        s.supply += quantity;
