@@ -12,9 +12,11 @@ Public key: EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3mn3ZdHivy3uSE
 
 ```
 cleos create account eosio eosiomeetone EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3mn3ZdHivy3uSE EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3mn3ZdHivy3uSE
-
+```
+```
 cleos create account eosio meetonetest1 EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3mn3ZdHivy3uSE EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3mn3ZdHivy3uSE
-
+```
+```
 cleos create account eosio meetonetest2 EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3mn3ZdHivy3uSE EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3mn3ZdHivy3uSE
 ```
 
@@ -36,6 +38,8 @@ cleos push action eosiomeetone create '["eosiomeetone","10000.0000 MEETONE"]' -p
 
 ```
 cleos push action eosiomeetone issue '["eosiomeetone","7500.0000 MEETONE","memo"]' -p eosiomeetone@active
+```
+```
 cleos push action eosiomeetone issue '["eosiomeetone","625.0000 MEETONE","memo"]' -p eosiomeetone@active
 ```
 
@@ -44,6 +48,8 @@ cleos push action eosiomeetone issue '["eosiomeetone","625.0000 MEETONE","memo"]
 
 ```
 cleos push action eosiomeetone transfer '["eosiomeetone","meetonetest1","1000.0000 MEETONE","memo"]' -p eosiomeetone
+```
+```
 cleos push action eosiomeetone transfer '["meetonetest1","eosiomeetone","6500.0000 MEETONE","memo"]' -p meetonetest1
 ```
 
@@ -52,6 +58,8 @@ cleos push action eosiomeetone transfer '["meetonetest1","eosiomeetone","6500.00
 
 ```
 cleos get currency balance eosiomeetone meetonetest1
+```
+```
 cleos get currency balance eosiomeetone eosiomeetone
 ```
 
