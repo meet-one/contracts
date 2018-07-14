@@ -61,6 +61,6 @@ cleos get currency balance eosiomeetone meetonetest1
 cleos get currency balance eosiomeetone eosiomeetone
 ```
 ```
-cleos get currency stats eosiomeetone MEETON
+cleos get currency stats eosiomeetone MEETONE
 ```
 
