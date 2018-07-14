@@ -3,11 +3,11 @@
  *  @copyright defined in eos/LICENSE.txt
  */
 
-#include "eosio.token.hpp"
+#include "eosiomeetone.hpp"
 
-namespace eosio {
+namespace meetone {
 
-void token::create( account_name issuer,
+void eosiomeetone::create( account_name issuer,
                     asset        maximum_supply )
 {
     require_auth( _self );
@@ -29,7 +29,7 @@ void token::create( account_name issuer,
 }
 
 
-void token::issue( account_name to, asset quantity, string memo )
+void eosiomeetone::issue( account_name to, asset quantity, string memo )
 {
     auto sym = quantity.symbol;
     eosio_assert( sym.is_valid(), "invalid symbol name" );
@@ -46,7 +46,26 @@ void token::issue( account_name to, asset quantity, string memo )
     eosio_assert( quantity.amount > 0, "must issue positive quantity" );
 
     eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
-    eosio_assert( quantity.amount <= st.max_supply.amount - st.supply.amount, "quantity exceeds available supply");
+
+    // The EOS mainnet went live on 2018-06-15 01:41:15 (UTC+8)
+    uint32_t seconds_per_year = 3600 * 24 * 365;
+    uint32_t seconds_since_activated = now() - 1528998075;
+
+    int64_t max_supply_amount = st.max_supply.amount;
+    auto frozen_amount = (int64_t)(max_supply_amount * 0.25);
+
+    // Frozen 25% token for four years, release 25% per year.
+    if (seconds_since_activated >= seconds_per_year * 4) {
+        frozen_amount = 0;
+    } else if (seconds_since_activated >= seconds_per_year * 3) {
+        frozen_amount = (int64_t)max_supply_amount * 0.25 * 0.25;
+    } else if (seconds_since_activated >= seconds_per_year * 2) {
+        frozen_amount = (int64_t)max_supply_amount * 0.25 * 0.5;
+    } else if (seconds_since_activated >= seconds_per_year) {
+        frozen_amount = (int64_t)max_supply_amount * 0.25 * 0.75;
+    }
+
+    eosio_assert( quantity.amount <= max_supply_amount - st.supply.amount - frozen_amount, "quantity exceeds available supply");
 
     statstable.modify( st, 0, [&]( auto& s ) {
        s.supply += quantity;
@@ -59,7 +78,7 @@ void token::issue( account_name to, asset quantity, string memo )
     }
 }
 
-void token::transfer( account_name from,
+void eosiomeetone::transfer( account_name from,
                       account_name to,
                       asset        quantity,
                       string       memo )
@@ -84,7 +103,7 @@ void token::transfer( account_name from,
     add_balance( to, quantity, from );
 }
 
-void token::sub_balance( account_name owner, asset value ) {
+void eosiomeetone::sub_balance( account_name owner, asset value ) {
    accounts from_acnts( _self, owner );
 
    const auto& from = from_acnts.get( value.symbol.name(), "no balance object found" );
@@ -100,7 +119,7 @@ void token::sub_balance( account_name owner, asset value ) {
    }
 }
 
-void token::add_balance( account_name owner, asset value, account_name ram_payer )
+void eosiomeetone::add_balance( account_name owner, asset value, account_name ram_payer )
 {
    accounts to_acnts( _self, owner );
    auto to = to_acnts.find( value.symbol.name() );
@@ -115,6 +134,6 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
    }
 }
 
-} /// namespace eosio
+} /// namespace meetone
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer) )
+EOSIO_ABI( meetone::eosiomeetone, (create)(issue)(transfer) )
