@@ -16,9 +16,7 @@ cleos create account eosio eosiomeetone EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3
 ```
 cleos create account eosio meetonetest1 EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3mn3ZdHivy3uSE EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3mn3ZdHivy3uSE
 ```
-```
-cleos create account eosio meetonetest2 EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3mn3ZdHivy3uSE EOS6yiFPzQFCxVg8DX8WPVChaFSBv6tTu2tF79m3mn3ZdHivy3uSE
-```
+
 
 ### Deploy Contract
 
