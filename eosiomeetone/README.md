@@ -28,27 +28,27 @@ cleos set contract eosiomeetone ../eosiomeetone -p eosiomeetone@active
 ### Create Token
 
 ```
-cleos push action eosiomeetone create '["eosiomeetone","10000.0000 MEETONE"]' -p eosiomeetone@active
+cleos push action eosiomeetone create '["eosiomeetone","10000000000.0000 MEETONE"]' -p eosiomeetone@active
 ```
 
 
 ### Issue Token
 
 ```
-cleos push action eosiomeetone issue '["eosiomeetone","7500.0000 MEETONE","memo"]' -p eosiomeetone@active
+cleos push action eosiomeetone issue '["eosiomeetone","7500000000.0000 MEETONE","memo"]' -p eosiomeetone@active
 ```
 ```
-cleos push action eosiomeetone issue '["eosiomeetone","625.0000 MEETONE","memo"]' -p eosiomeetone@active
+cleos push action eosiomeetone issue '["eosiomeetone","6250000000.0000 MEETONE","memo"]' -p eosiomeetone@active
 ```
 
 
 ### Transfer Token
 
 ```
-cleos push action eosiomeetone transfer '["eosiomeetone","meetonetest1","1000.0000 MEETONE","memo"]' -p eosiomeetone
+cleos push action eosiomeetone transfer '["eosiomeetone","meetonetest1","10000000.0000 MEETONE","memo"]' -p eosiomeetone
 ```
 ```
-cleos push action eosiomeetone transfer '["meetonetest1","eosiomeetone","6500.0000 MEETONE","memo"]' -p meetonetest1
+cleos push action eosiomeetone transfer '["meetonetest1","eosiomeetone","10000000.0000 MEETONE","memo"]' -p meetonetest1
 ```
 
 
