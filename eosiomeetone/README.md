@@ -28,7 +28,7 @@ cleos set contract eosiomeetone ../eosiomeetone -p eosiomeetone@active
 ### Create Token
 
 ```
-cleos push action eosiomeetone create '["eosiomeetone","10000.0000 MEETONE"]' -p eosiomeetone@active
+cleos push action eosiomeetone create '["eosiomeetone","10000000000.0000 MEETONE"]' -p eosiomeetone@active
 ```
 
 
