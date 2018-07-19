@@ -46,7 +46,7 @@ void eosiomeetone::issue( account_name to, asset quantity, string memo )
     eosio_assert( quantity.amount > 0, "must issue positive quantity" );
 
     eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
-
+    
     // The EOS mainnet went live on 2018-06-15 01:41:15 (UTC+8)
     uint32_t seconds_per_year = 3600 * 24 * 365;
     uint32_t seconds_since_activated = now() - 1528998075;
@@ -78,6 +78,31 @@ void eosiomeetone::issue( account_name to, asset quantity, string memo )
     }
 }
 
+void eosiomeetone::retire( asset quantity, string memo )
+{
+    auto sym = quantity.symbol;
+    eosio_assert( sym.is_valid(), "invalid symbol name" );
+    eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
+
+    auto sym_name = sym.name();
+    stats statstable( _self, sym_name );
+    auto existing = statstable.find( sym_name );
+    eosio_assert( existing != statstable.end(), "token with symbol does not exist" );
+    const auto& st = *existing;
+
+    require_auth( st.issuer );
+    eosio_assert( quantity.is_valid(), "invalid quantity" );
+    eosio_assert( quantity.amount > 0, "must retire positive quantity" );
+
+    eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+
+    statstable.modify( st, 0, [&]( auto& s ) {
+       s.supply -= quantity;
+    });
+
+    sub_balance( st.issuer, quantity );
+}
+
 void eosiomeetone::transfer( account_name from,
                       account_name to,
                       asset        quantity,
@@ -98,9 +123,10 @@ void eosiomeetone::transfer( account_name from,
     eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
     eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
 
+    auto payer = has_auth( to ) ? to : from;
 
     sub_balance( from, quantity );
-    add_balance( to, quantity, from );
+    add_balance( to, quantity, payer );
 }
 
 void eosiomeetone::sub_balance( account_name owner, asset value ) {
@@ -109,14 +135,9 @@ void eosiomeetone::sub_balance( account_name owner, asset value ) {
    const auto& from = from_acnts.get( value.symbol.name(), "no balance object found" );
    eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
 
-
-   if( from.balance.amount == value.amount ) {
-      from_acnts.erase( from );
-   } else {
-      from_acnts.modify( from, owner, [&]( auto& a ) {
-          a.balance -= value;
+   from_acnts.modify( from, owner, [&]( auto& a ) {
+         a.balance -= value;
       });
-   }
 }
 
 void eosiomeetone::add_balance( account_name owner, asset value, account_name ram_payer )
@@ -134,6 +155,14 @@ void eosiomeetone::add_balance( account_name owner, asset value, account_name ra
    }
 }
 
+void eosiomeetone::close( account_name owner, symbol_type symbol ) {
+   accounts acnts( _self, owner );
+   auto it = acnts.find( symbol.name() );
+   eosio_assert( it != acnts.end(), "Balance row already deleted or never existed. Action won't have any effect." );
+   eosio_assert( it->balance.amount == 0, "Cannot close because the balance is not zero." );
+   acnts.erase( it );
+}
+
 } /// namespace meetone
 
-EOSIO_ABI( meetone::eosiomeetone, (create)(issue)(transfer) )
+EOSIO_ABI( meetone::eosiomeetone, (create)(issue)(transfer)(close)(retire) )
