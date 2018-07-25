@@ -1,0 +1,42 @@
+{
+  "____comment": "",
+  "version": "eosio::abi/1.0",
+  "types": [],
+  "structs": [
+  {
+        "name": "stats_info",
+        "base": "",
+        "fields": [
+          {
+            "name": "supply",
+            "type": "asset"
+          },
+          {
+            "name": "balance",
+            "type": "asset"
+          },
+          {
+            "name": "weight",
+            "type": "uint32"
+          }
+        ]
+      }
+  ],
+  "actions": [],
+  "tables": [
+    {
+        "name": "stats",
+        "type": "stats_info",
+        "index_type": "i64",
+        "key_names": [
+            "supply"
+        ],
+        "key_types": [
+            "uint64"
+        ]
+    }
+  ],
+  "ricardian_clauses": [],
+  "error_messages": [],
+  "abi_extensions": []
+}
