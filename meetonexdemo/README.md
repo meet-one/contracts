@@ -36,13 +36,10 @@ cleos push action eosiomeetone transfer '["eosiomeetone","meetonexdemo","100.000
 
 ### Check Balance:
 ```
-cleos get currency balance eosiomeetone meetonetest1
-```
-```
+cleos get currency balance eosiomeetone meetonexdemo
 cleos get currency balance eosiomeetone eosiomeetone
-```
-```
 cleos get currency stats eosiomeetone MEETONE
+cleos get currency stats eosiomeetone DEMO
 ```
 
 
