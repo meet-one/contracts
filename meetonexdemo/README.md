@@ -27,7 +27,7 @@ cleos set contract meetonexdemo ../meetonexdemo -p meetonexdemo@active
 cleos set account permission meetonexdemo active '{"threshold": 1,"keys": [{"key": "EOS66jh1quuuZRLivjTxeF4fTDFpVRz4vyE4kq1VN2vA6UmTphrFK","weight": 1}],"accounts": [{"permission":{"actor":"meetonexdemo","permission":"eosio.code"},"weight":1}]}' owner -p meetonexdemo
 ```
 
-### [Deploy Token](https://github.com/meet-one/contracts/tree/master/eosiomeetone)
+### [Create Token](https://github.com/meet-one/contracts/tree/master/eosiomeetone)
 
 
 ### Re-Deploy contract
@@ -40,13 +40,13 @@ sh deploy.sh
 sh transfer_test.sh
 ```
 
-### Check Balance:
+### Check Balance
 ```
 sh check_balance.sh
 ```
 
 
-### Query Table:
+### Query Table
 ```
 cleos get currency stats eosiomeetone MEETONE
 cleos get currency stats eosiomeetone DEMO
