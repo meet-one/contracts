@@ -17,7 +17,7 @@ eosiocpp -o meetonexdemo.wast meetonexdemo.cpp
 eosiocpp -g meetonexdemo.abi meetonexdemo.cpp
 ```
 
-### Deploy
+### Deploy Contract
 ```
 cleos set contract meetonexdemo ../meetonexdemo -p meetonexdemo@active
 ```
@@ -29,21 +29,26 @@ cleos set account permission meetonexdemo active '{"threshold": 1,"keys": [{"key
 
 ### [Deploy Token](https://github.com/meet-one/contracts/tree/master/eosiomeetone)
 
+
+### Re-Deploy contract
+```
+sh deploy.sh
+```
+
 ### Test
 ```
-cleos push action eosiomeetone transfer '["eosiomeetone","meetonexdemo","100.0000 MEETONE","Hello world."]' -p eosiomeetone
+sh transfer_test.sh
 ```
 
 ### Check Balance:
 ```
-cleos get currency balance eosiomeetone meetonexdemo
-cleos get currency balance eosiomeetone eosiomeetone
-cleos get currency stats eosiomeetone MEETONE
-cleos get currency stats eosiomeetone DEMO
+sh check_balance.sh
 ```
 
 
 ### Query Table:
 ```
+cleos get currency stats eosiomeetone MEETONE
+cleos get currency stats eosiomeetone DEMO
 cleos get table meetonexdemo meetonexdemo stats
 ```
