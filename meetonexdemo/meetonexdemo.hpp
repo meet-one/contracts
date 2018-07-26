@@ -19,46 +19,23 @@ namespace meetone {
 
     class meetonexdemo : public contract {
         // Uses Bancor math to calculate current price
+        //@abi table
         struct exchange_state {
             asset supply;
             asset balance;
-            uint32_t weight;
+            uint32_t connector_weight;
 
             uint64_t primary_key() const { return supply.symbol; }
 
-            EOSLIB_SERIALIZE(exchange_state, (supply)(balance)(weight))
+            EOSLIB_SERIALIZE(exchange_state, (supply)(balance)(connector_weight))
         };
 
     public:
         typedef eosio::multi_index<N(stats), exchange_state> state_index;
 
-        meetonexdemo(account_name self) : contract(self) {
-            state_index stats(_self, _self);
+        meetonexdemo(account_name self) : contract(self) {};
 
-            auto meetone_state = stats.find(S(4, DEMO));
-
-            if (meetone_state == stats.end()) {
-                stats.emplace(_self, [&](auto &stat) {
-                    stat.supply.symbol = S(4, DEMO);
-                    stat.supply.amount = 100000000000;
-
-                    stat.balance.symbol = S(4, MEETONE);
-                    stat.balance.amount = 100000000000;
-
-                    stat.weight = 500;
-                });
-            } else {
-                stats.modify(stats.begin(), _self, [&](auto &stat) {
-                    stat.supply.symbol = S(4, DEMO);
-                    stat.supply.amount = 100000000000;
-
-                    stat.balance.symbol = S(4, MEETONE);
-                    stat.balance.amount = 100000000000;
-
-                    stat.weight = 500;
-                });
-            }
-        }
+        void init();
 
         void transfer(account_name from, account_name to, asset quantity, string memo);
 

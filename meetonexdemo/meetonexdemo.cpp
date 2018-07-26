@@ -9,6 +9,30 @@
 
 namespace meetone {
 
+    void meetonexdemo::init() {
+        state_index stats(_self, _self);
+
+        stats.emplace(_self, [&](auto &stat) {
+            stat.supply.symbol = DEMO_SYMBOL;
+            stat.supply.amount = 100000000000;
+
+            stat.balance.symbol = MEETONE_SYMBOL;
+            stat.balance.amount = 100000000000;
+
+            stat.connector_weight = 500;
+        });
+
+//        stats.modify(stats.begin(), _self, [&](auto &stat) {
+//            stat.supply.symbol = S(4, DEMO);
+//            stat.supply.amount = 100000000000;
+//
+//            stat.balance.symbol = S(4, MEETONE);
+//            stat.balance.amount = 100000000000;
+//
+//            stat.connector_weight = 500;
+//        });
+    }
+
     void meetonexdemo::transfer(account_name from, account_name to, asset token_paid, string memo) {
         if (from == _self || to != _self) {
             return;
@@ -27,9 +51,13 @@ namespace meetone {
 
             state_index stats(_self, _self);
 
-            auto meetone_stat = stats.get(S(4, DEMO));
+            if(stats.find(DEMO_SYMBOL) == stats.end()){
+                init();
+            }
 
-            eosio::print("meetone_stat weight: ", meetone_stat.weight, "\n");
+            auto meetone_stat = stats.get(DEMO_SYMBOL);
+
+            eosio::print("meetone_stat connector_weight: ", meetone_stat.connector_weight, "\n");
             eosio::print("meetone_stat supply symbol: ", meetone_stat.supply.symbol, "\n");
             eosio::print("meetone_stat supply amount: ", meetone_stat.supply.amount, "\n");
             eosio::print("meetone_stat balance symbol: ", meetone_stat.balance.symbol, "\n");
@@ -39,8 +67,8 @@ namespace meetone {
             real_type balance_amount = meetone_stat.balance.amount;
             real_type supply_amount = meetone_stat.supply.amount;
 
-            // stat weight
-            real_type cw = meetone_stat.weight / 1000.0;
+            // stat connector_weight
+            real_type cw = meetone_stat.connector_weight / 1000.0;
             real_type ONE = 1.0;
 
             // calculate amount of token issued
@@ -56,7 +84,7 @@ namespace meetone {
             int64_t balance_amount_after_issued = meetone_stat.balance.amount + token_paid.amount;
 
             // update stat token data
-            stats.modify(stats.begin(), _self, [&](auto &stat) {
+            stats.modify(stats.find(DEMO_SYMBOL), _self, [&](auto &stat) {
                 stat.supply.amount = supply_amount_after_issued;
                 stat.balance.amount = balance_amount_after_issued;
             });
