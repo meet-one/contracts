@@ -38,11 +38,11 @@ namespace meetone {
             return;
         }
 
-        eosio::print("from:", from, "\n");
-        eosio::print("to:", to, "\n");
-        eosio::print("token_paid:", token_paid, "\n");
-        eosio::print("symbol:", token_paid.symbol, "\n");
-        eosio::print("memo:", memo, "\n");
+//        eosio::print("from:", from, "\n");
+//        eosio::print("to:", to, "\n");
+//        eosio::print("token_paid:", token_paid, "\n");
+//        eosio::print("symbol:", token_paid.symbol, "\n");
+//        eosio::print("memo:", memo, "\n");
 
         // Only accept MEETONE token
         if (token_paid.symbol == MEETONE_SYMBOL) {
@@ -51,17 +51,17 @@ namespace meetone {
 
             state_index stats(_self, _self);
 
-            if(stats.find(DEMO_SYMBOL) == stats.end()){
+            if (stats.find(DEMO_SYMBOL) == stats.end()) {
                 init();
             }
 
             auto meetone_stat = stats.get(DEMO_SYMBOL);
 
-            eosio::print("meetone_stat connector_weight: ", meetone_stat.connector_weight, "\n");
-            eosio::print("meetone_stat supply symbol: ", meetone_stat.supply.symbol, "\n");
-            eosio::print("meetone_stat supply amount: ", meetone_stat.supply.amount, "\n");
-            eosio::print("meetone_stat balance symbol: ", meetone_stat.balance.symbol, "\n");
-            eosio::print("meetone_stat balance amount: ", meetone_stat.balance.amount, "\n\n\n\n");
+//            eosio::print("meetone_stat connector_weight: ", meetone_stat.connector_weight, "\n");
+//            eosio::print("meetone_stat supply symbol: ", meetone_stat.supply.symbol, "\n");
+//            eosio::print("meetone_stat supply amount: ", meetone_stat.supply.amount, "\n");
+//            eosio::print("meetone_stat balance symbol: ", meetone_stat.balance.symbol, "\n");
+//            eosio::print("meetone_stat balance amount: ", meetone_stat.balance.amount, "\n\n\n\n");
 
             real_type token_paid_amount = token_paid.amount;
             real_type balance_amount = meetone_stat.balance.amount;
@@ -89,9 +89,9 @@ namespace meetone {
                 stat.balance.amount = balance_amount_after_issued;
             });
 
-            eosio::print("issued: ", issued, "\n");
-            eosio::print("supply_amount_after_issued: ", supply_amount_after_issued, "\n");
-            eosio::print("balance_amount_after_issued: ", balance_amount_after_issued, "\n");
+//            eosio::print("issued: ", issued, "\n");
+//            eosio::print("supply_amount_after_issued: ", supply_amount_after_issued, "\n");
+//            eosio::print("balance_amount_after_issued: ", balance_amount_after_issued, "\n");
 
             action(
                     permission_level{_self, N(active)},

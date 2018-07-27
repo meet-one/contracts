@@ -45,6 +45,10 @@ sh transfer_test.sh
 sh check_balance.sh
 ```
 
+### Check Table
+```
+sh check_table.sh
+```
 
 ### Query Table
 ```
