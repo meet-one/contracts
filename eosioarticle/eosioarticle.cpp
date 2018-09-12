@@ -81,9 +81,10 @@ void eosioarticle::record(std::string title, std::string author, std::string bod
 /// @abi action
 void eosioarticle::post(account_name to, std::string title, std::string body)
 {
-    require_recipient(to);
+    eosio_assert(is_account(to), "to account does not exist");
     eosio_assert(title.size() <= 2 * 1024, "title has more than 2k bytes");
     eosio_assert(body.size() <= 512 * 1024, "body has more than 512k bytes");
+    require_recipient(to);
 }
 
 } /// namespace meetone
