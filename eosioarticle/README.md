@@ -80,6 +80,51 @@ You can combine build and deploy, by:
 ./build_deploy.sh
 ~~~
 
+## Action
+
+#### publish
+
+Publish an article on Multi-Index DB. (You must pay for RAM)
+
+Parameters:
+
+- owner
+- title
+- author
+- body
+
+#### edit
+
+Edit an article on Multi-Index DB by id.
+
+Parameters:
+
+- id
+- owner
+- title
+- author
+- body
+
+#### record
+
+Publish an article on blockchain. You can't edit it later. (Free)
+
+Parameters:
+
+- title
+- author
+- body
+
+#### post
+
+Post a message to an account. You can't edit it later. (Free)
+
+Parameters:
+
+- to
+- title
+- body
+
 ## Test
 
 ~~~
@@ -99,4 +144,17 @@ $ cleos get table eosioarticle eosioarticle articles
   ],
   "more": false
 }
+
+$ cleos push action eosioarticle edit '[0,"eosioarticle","Modify","UMU618","Other text"]' -p eosioarticle
+executed transaction: 77ad1e77c2b172a45cdbebdc5afcc4e30f8c1c802ced301046d930920d3ae6a5  136 bytes  3154 us
+#  eosioarticle <= eosioarticle::edit           {"id":0,"owner":"eosioarticle","title":"Modify","author":"UMU618","body":"Other text"}
+
+$ cleos push action eosioarticle record '["Record","UMU618","Main"]' -p eosioarticle
+executed transaction: dffeb3db6b157c66c32bab7d1b5216e5089a8c48d75ff30a1e677f1a64934bfb  112 bytes  562 us
+#  eosioarticle <= eosioarticle::record         {"title":"Record","author":"UMU618","body":"Main"}
+
+$ cleos push action eosioarticle post '["eosio","Hi","Hello, eosio!"]' -p eosioarticle
+executed transaction: 541769298a34966f72933777bb952b5d996f90a27cb87bb29263bcc8a24758ba  120 bytes  451 us
+#  eosioarticle <= eosioarticle::post           {"to":"eosio","title":"Hi","body":"Hello, eosio!"}
+#         eosio <= eosioarticle::post           {"to":"eosio","title":"Hi","body":"Hello, eosio!"}
 ~~~

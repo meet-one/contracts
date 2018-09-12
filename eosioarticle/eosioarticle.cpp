@@ -69,17 +69,24 @@ void eosioarticle::edit(uint64_t id, account_name owner, std::string title, std:
 }
 
 /// @abi action
-void eosioarticle::record(account_name owner, std::string title, std::string author, std::string body)
+void eosioarticle::record(std::string title, std::string author, std::string body)
 {
     //print("checking record parameters...");
-    require_auth(owner);
-    require_recipient(owner);
     eosio_assert(title.size() <= 2 * 1024, "title has more than 2k bytes");
     eosio_assert(author.size() <= 1 * 1024, "title has more than 1k bytes");
     eosio_assert(body.size() <= 512 * 1024, "body has more than 512k bytes");
     //print("record!");
 }
 
+/// @abi action
+void eosioarticle::post(account_name to, std::string title, std::string body)
+{
+    eosio_assert(is_account(to), "to account does not exist");
+    eosio_assert(title.size() <= 2 * 1024, "title has more than 2k bytes");
+    eosio_assert(body.size() <= 512 * 1024, "body has more than 512k bytes");
+    require_recipient(to);
+}
+
 } /// namespace meetone
 
-EOSIO_ABI(meetone::eosioarticle, (publish)(edit)(record))
+EOSIO_ABI(meetone::eosioarticle, (publish)(edit)(record)(post))
