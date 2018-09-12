@@ -16,7 +16,7 @@ void eosioarticle::publish(account_name owner, std::string title, std::string au
     require_auth(owner);
     require_recipient(owner);
     eosio_assert(title.size() <= 2 * 1024, "title has more than 2k bytes");
-    eosio_assert(author.size() <= 1 * 1024, "title has more than 1k bytes");
+    eosio_assert(author.size() <= 1 * 1024, "author has more than 1k bytes");
     eosio_assert(body.size() <= 512 * 1024, "body has more than 512k bytes");
 
     //print("publishing...");
@@ -40,7 +40,7 @@ void eosioarticle::edit(uint64_t id, account_name owner, std::string title, std:
     require_auth(owner);
     require_recipient(owner);
     eosio_assert(title.size() <= 2 * 1024, "title has more than 2k bytes");
-    eosio_assert(author.size() <= 1 * 1024, "title has more than 1k bytes");
+    eosio_assert(author.size() <= 1 * 1024, "author has more than 1k bytes");
     eosio_assert(body.size() <= 512 * 1024, "body has more than 512k bytes");
 
     //print("editing...");
