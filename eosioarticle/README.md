@@ -121,7 +121,6 @@ Post a message to an account. You can't edit it later. (Free)
 
 Parameters:
 
-- from
 - to
 - title
 - body
