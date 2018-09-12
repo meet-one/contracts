@@ -21,7 +21,10 @@ public:
       void edit(uint64_t id, account_name owner, std::string title, std::string author, std::string body);
 
       // NOT save to database
-      void record(account_name owner, std::string title, std::string author, std::string body);
+      void record(std::string title, std::string author, std::string body);
+
+      // NOT save to database
+      void post(account_name to, std::string title, std::string body);
 
 private:
       ///@abi table articles i64
