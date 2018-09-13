@@ -87,6 +87,20 @@ void eosioarticle::post(account_name to, std::string title, std::string body)
     require_recipient(to);
 }
 
+/// @abi action
+void eosioarticle::chat(account_name to, std::string memo)
+{
+    eosio_assert(is_account(to), "to account does not exist");
+    eosio_assert(memo.size() <= 512 * 1024, "body has more than 512k bytes");
+    require_recipient(to);
+}
+
+/// @abi action
+void eosioarticle::memo(std::string memo)
+{
+    eosio_assert(memo.size() <= 512 * 1024, "body has more than 512k bytes");
+}
+
 } /// namespace meetone
 
-EOSIO_ABI(meetone::eosioarticle, (publish)(edit)(record)(post))
+EOSIO_ABI(meetone::eosioarticle, (publish)(edit)(record)(post)(chat)(memo))
