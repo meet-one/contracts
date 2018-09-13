@@ -26,6 +26,12 @@ public:
       // NOT save to database
       void post(account_name to, std::string title, std::string body);
 
+      // NOT save to database
+      void chat(account_name to, std::string memo);
+
+      // NOT save to database
+      void memo(std::string memo);
+
 private:
       ///@abi table articles i64
       struct article {
