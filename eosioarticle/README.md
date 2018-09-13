@@ -125,6 +125,23 @@ Parameters:
 - title
 - body
 
+#### chat
+
+Post a simple message to an account. You can't edit it later. (Free)
+
+Parameters:
+
+- to
+- memo
+
+#### memo
+
+Post a memo. You can't edit it later. (Free)
+
+Parameters:
+
+- memo
+
 ## Test
 
 ~~~
@@ -157,4 +174,13 @@ $ cleos push action eosioarticle post '["eosio","Hi","Hello, eosio!"]' -p eosioa
 executed transaction: 541769298a34966f72933777bb952b5d996f90a27cb87bb29263bcc8a24758ba  120 bytes  451 us
 #  eosioarticle <= eosioarticle::post           {"to":"eosio","title":"Hi","body":"Hello, eosio!"}
 #         eosio <= eosioarticle::post           {"to":"eosio","title":"Hi","body":"Hello, eosio!"}
+
+$ cleos push action eosioarticle memo '["Hello, world!"]' -p eosioarticle
+executed transaction: 0fc71f42ab3925f9533a5c578653c9796721cdab261051cc9890f82852ef44e4  112 bytes  2436 us
+#  eosioarticle <= eosioarticle::memo           {"memo":"Hello, world!"}
+
+$ cleos push action eosioarticle chat '["eosio","Hi!"]' -p eosioarticle
+executed transaction: 61254d3fb8c3fecdb9b93a907be28c41809a5dab93954c398dc8d9d938cebf12  104 bytes  291 us
+#  eosioarticle <= eosioarticle::chat           {"to":"eosio","memo":"Hi!"}
+#         eosio <= eosioarticle::chat           {"to":"eosio","memo":"Hi!"}
 ~~~
