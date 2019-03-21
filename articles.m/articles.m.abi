@@ -1,0 +1,120 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Thu Mar 21 09:36:37 2019",
+    "version": "eosio::abi/1.1",
+    "structs": [
+        {
+            "name": "article",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "owner",
+                    "type": "name"
+                },
+                {
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "name": "author",
+                    "type": "string"
+                },
+                {
+                    "name": "create_time",
+                    "type": "time_point"
+                },
+                {
+                    "name": "update_time",
+                    "type": "time_point"
+                },
+                {
+                    "name": "content",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "delarticle",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "edit",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "name": "author",
+                    "type": "string"
+                },
+                {
+                    "name": "content",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "publish",
+            "base": "",
+            "fields": [
+                {
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "name": "author",
+                    "type": "string"
+                },
+                {
+                    "name": "content",
+                    "type": "string"
+                }
+            ]
+        }
+    ],
+    "types": [],
+    "actions": [
+        {
+            "name": "delarticle",
+            "type": "delarticle",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "edit",
+            "type": "edit",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "publish",
+            "type": "publish",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "articles",
+            "type": "article",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "variants": [],
+    "abi_extensions": []
+}

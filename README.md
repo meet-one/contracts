@@ -10,3 +10,6 @@
 
 ## 3. [MEET.ONE EOSIO Article Publisher](eosioarticle)
 ### You can post articles on EOSIO blockchain.
+
+## 4. [MEET.ONE Sidechain Article Publisher](aritcles.m)
+### You can post articles on MEET.ONE sidechain.
