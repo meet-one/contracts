@@ -32,7 +32,7 @@ delete a published article by id.
 ```
 cleos -u https://fullnode.meet.one push action articles.m delarticle '["ARTICLE_ID"]' -p ARTTICLE_OWNER
 ```
-only owner of article can delete a published article, and RAM will return to 
+only owner of article can delete a published article, and RAM will return to owner.
 
 ## QUERY
 

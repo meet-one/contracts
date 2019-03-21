@@ -15,6 +15,8 @@ class[[eosio::contract("articles.m")]] articles : public eosio::contract {
   ACTION delarticle(uint64_t id);
 
  private:
+
+// struct of articles on Multi_index DB
   TABLE article {
     uint64_t id;
     eosio::name owner;
@@ -24,13 +26,16 @@ class[[eosio::contract("articles.m")]] articles : public eosio::contract {
     eosio::time_point update_time;
     std::string content;
 
+// primary key by id
     uint64_t primary_key() const { return id; }
+// secondary key by owner name
     uint64_t by_owner_name() const { return owner.value; }
 
     EOSLIB_SERIALIZE(article,
                      (id)(owner)(title)(author)(create_time)(update_time)(content))
   };
 
+// table's name is "articles",
   typedef eosio::multi_index<
       "articles"_n, article,
       eosio::indexed_by<
