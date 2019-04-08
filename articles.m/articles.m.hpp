@@ -30,7 +30,7 @@ class[[eosio::contract("articles.m")]] articles : public eosio::contract {
     uint64_t primary_key() const { return id; }
 // secondary key by owner name
     uint64_t by_owner_name() const { return owner.value; }
-
+    
     EOSLIB_SERIALIZE(article,
                      (id)(owner)(title)(author)(create_time)(update_time)(content))
   };

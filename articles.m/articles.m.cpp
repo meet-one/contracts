@@ -10,7 +10,8 @@ void articles::publish(std::string title,
   auto act = eosio::get_action(1, 0);
   eosio::name owner = act.authorization.at(0).actor;
   require_auth(owner);
-
+  eosio::check(title.find_first_not_of(" ") != -1, "title can not be empty.");
+  eosio::check(content.find_first_not_of(" ") != -1, "content can not be empty.");
   auto now = eosio::time_point(eosio::microseconds(current_time()));
   article_table articles(get_self(), get_self().value);
   articles.emplace(owner, [&](auto& a) {
