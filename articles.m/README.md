@@ -1,5 +1,7 @@
 # MEETONE Sidechain Article Publisher
 
+Contract articles.m stores article on chain. It inclueds 3 actions, publish, edit, delete.
+
 Contract account name:
 ```
 articles.m
