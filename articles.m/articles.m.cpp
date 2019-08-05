@@ -12,7 +12,7 @@ void articles::publish(std::string title,
   require_auth(owner);
   eosio::check(title.find_first_not_of(" ") != -1, "title can not be empty.");
   eosio::check(content.find_first_not_of(" ") != -1, "content can not be empty.");
-  auto now = eosio::time_point(eosio::microseconds(current_time()));
+  auto now = eosio::current_time_point();
   article_table articles(get_self(), get_self().value);
   articles.emplace(owner, [&](auto& a) {
 // id strictly auto-incrementing  
@@ -37,7 +37,7 @@ void articles::edit(uint64_t id,
 // only article's owner can edit the article
   require_auth(itr->owner);
 
-  auto now = eosio::time_point(eosio::microseconds(current_time()));
+  auto now = eosio::current_time_point();
   articles.modify(itr, itr->owner, [&](auto& a) {
     a.title = title;
     a.author = author;
@@ -56,5 +56,3 @@ void articles::delarticle(uint64_t id) {
 }
 
 }  // namespace meetone
-
-EOSIO_DISPATCH(meetone::articles, (publish)(edit)(delarticle))
